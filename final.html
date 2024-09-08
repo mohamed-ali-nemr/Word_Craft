@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Letters</title>
+
+    <style>
+      body {
+        font-family: "Times New Roman", Times, serif;
+        text-align: center;
+        background-color: #f682c5;
+      }
+      .input-container {
+        margin-top: 50px;
+      }
+      .output-container {
+        margin-top: 20px;
+        font-size: 24px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 5px;
+      }
+      .word-container {
+        margin-top: 20px;
+      }
+
+      .btn {
+        transition: all 0.3s;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      }
+      .btn:hover {
+        transform: scale(1.1);
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1 style="font-size: 40px; color: #222; text-shadow: 2px 2px 4px #aaa">
+        Learning English Letters
+      </h1>
+      <h2 style="font-size: 24px; color: #555; text-shadow: 1px 1px 2px #ccc">
+       Made ❤ with to Almas 
+      </h2>
+    </header>
+
+    <div class="input-container">
+      <input
+        type="number"
+        id="numberInput"
+        min="1"
+        placeholder="Enter a number between 1 and 26"
+        style="
+          width: 50%;
+          padding: 10px;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+        "
+      />
+      <button
+        class="btn"
+        style="
+          background-color: #4caf50;
+          color: white;
+          padding: 10px 20px;
+          font-size: 16px;
+          border-radius: 5px;
+          border: none;
+          cursor: pointer;
+        "
+        onclick="generateRandomLetters()"
+      >
+        Your Character
+      </button>
+    </div>
+
+    <div
+      class="output-container"
+      id="output"
+      style="align-items: center; margin-top: 20px; text-align: center"
+    ></div>
+    <div
+      class="word-container"
+      id="wordContainer"
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        text-align: center;
+      "
+    ></div>
+  </body>
+
+  <script>
+    const wordsAndImages = {
+      A: { word: "Apple", image: "./img/a.png" },
+      B: { word: "Ball", image: "./img/b.png" },
+      C: { word: "Cat", image: "./img/c.png" },
+      D: { word: "Dog", image: "./img/d.png" },
+      E: { word: "Eggs", image: "./img/e.png" },
+      F: { word: "Frog", image: "./img/f.png" },
+      G: { word: "Goat", image: "./img/g.png" },
+      H: { word: "Hen", image: "./img/h.png" },
+      I: { word: "Igloo", image: "./img/i.png" },
+      J: { word: "Jar", image: "./img/j.png" },
+      K: { word: "Kite", image: "./img/k.png" },
+      L: { word: "Lion", image: "./img/l.png" },
+      M: { word: "Monkey", image: "./img/m.png" },
+      N: { word: "Nest", image: "./img/n.png" },
+      O: { word: "Orange", image: "./img/o.png" },
+      P: { word: "Pizza", image: "./img/p.png" },
+      Q: { word: "Queen", image: "./img/q.png" },
+      R: { word: "Rabbit", image: "./img/r.png" },
+      S: { word: "Star", image: "./img/s.png" },
+      T: { word: "Taxi", image: "./img/t.png" },
+      U: { word: "Umbrella", image: "./img/u.png" },
+      V: { word: "Vase", image: "./img/v.png" },
+      W: { word: "Watch", image: "./img/w.png" },
+      X: { word: "Xylophone", image: "./img/x.png" },
+      Y: { word: "Yarn", image: "./img/y.png" },
+      Z: { word: "Zebra", image: "./img/z.png" },
+    };
+
+    function generateRandomLetters() {
+      const numberInput = document.getElementById("numberInput").value;
+      const outputContainer = document.getElementById("output");
+      const wordContainer= document.getElementById("wordContainer");
+      outputContainer.innerHTML = ""; // Clear previous output
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      let result = "";
+
+      if (numberInput && numberInput > 0 && numberInput <= 26) {
+        for (let i = 0; i < numberInput; i++) {
+          result += alphabet.charAt(
+            Math.floor(Math.random() * alphabet.length)
+          );
+        }
+        displayButtons(result);
+      } else {
+        outputContainer.innerText = "Please enter a valid number between 1 and 26.";
+        wordContainer.innerText = "";
+      }
+    }
+
+    function displayButtons(letters) {
+      const outputContainer = document.getElementById("output");
+      outputContainer.innerHTML = ""; // Clear previous buttons
+
+      letters.split("").forEach((letter) => {
+        const button = document.createElement("button");
+        button.innerText = letter;
+        button.onclick = () => showWordAndImage(letter);
+        outputContainer.appendChild(button);
+      });
+    }
+
+    function showWordAndImage(letter) {
+      const wordContainer = document.getElementById("wordContainer");
+      const info = wordsAndImages[letter.toUpperCase()];
+      if (info) {
+        wordContainer.innerHTML = `<h3>${info.word}</h3><img src="${info.image}" alt="${info.word}" width="200">`;
+      } else {
+        wordContainer.innerHTML = `<h3>No word available for ${letter}</h3>`;
+      }
+    }
+  </script>
+</html>
